@@ -9,7 +9,8 @@
  */
 /* jshint newcap: false */
 
-var crypto = require('crypto');
+//var crypto = require('crypto');
+import { SHA512 } from "https://code4fukui.github.io/SHA512/SHA512.js"
 
 // -- Operations copied from TweetNaCl.js. --
 
@@ -224,9 +225,10 @@ function convertSecretKey(sk) {
   // var d = new Uint8Array(64), o = new Uint8Array(32), i;
   // nacl.lowlevel.crypto_hash(d, sk, 32);
   var o = new Uint8Array(32), i;
-  var hash = crypto.createHash('sha512');
-  hash.update(sk);
-  var d = hash.digest()
+  //var hash = crypto.createHash('sha512');
+  //hash.update(sk);
+  //var d = hash.digest()
+  var d = SHA512.digest(sk);
   d[0] &= 248;
   d[31] &= 127;
   d[31] |= 64;
@@ -244,8 +246,8 @@ function convertKeyPair(edKeyPair) {
   };
 }
 
-module.exports = {
-  convertPublicKey: convertPublicKey,
-  convertSecretKey: convertSecretKey,
-  convertKeyPair: convertKeyPair,
+export {
+  convertPublicKey,
+  convertSecretKey,
+  convertKeyPair,
 };
